@@ -1,7 +1,9 @@
 #include <vector>
+#include <cmath>
 
 #include "tribe.hpp"
 #include "person.hpp"
+#include "util.hpp"
 
 using namespace std;
 
@@ -24,6 +26,7 @@ int tribe::eat()
 int tribe::end()
 {
     storedFood = tribesmen.size() * -10;
+    tribesmen.clear();
     return 1;
 }
 
@@ -61,7 +64,7 @@ vector<int> tribe::averageStats()
     temporaryStats.push_back(0);//creativity
     temporaryStats.push_back(0);//charisma
 
-    for(int i = 0; i < tribesmen.size(); ++i)
+    for(unsigned i = 0; i < tribesmen.size(); ++i)//unsigned to eliminate warn
     {
         temporaryStats.at(0) += tribesmen.at(i).getWeight();
         temporaryStats.at(1) += tribesmen.at(i).getHeight();
@@ -72,7 +75,7 @@ vector<int> tribe::averageStats()
         temporaryStats.at(6) += tribesmen.at(i).getChar();
     }
 
-    for(int i = 0; i < temporaryStats.size(); ++i)
+    for(unsigned i = 0; i < temporaryStats.size(); ++i)//unsigned to stop warn
     {
         temporaryStats.at(i) /= tribesmen.size();//divide by population
     }
@@ -84,7 +87,7 @@ int tribe::males()
 {
     int temp = 0;
 
-    for(int i = 0; i < tribesmen.size(); ++i)
+    for(unsigned i = 0; i < tribesmen.size(); ++i)//unsigned to remove warn
     {
         if(tribesmen.at(i).isMale())
         {
@@ -93,4 +96,59 @@ int tribe::males()
     }
 
     return temp;
+}
+
+int tribe::getTech()
+{
+    return technology;
+}
+
+int tribe::hunt(int hunters)
+{
+    storedFood += (1 + (technology * 0.1)) * gaussian((hunters * 0.8) + (hunters * technology * 0.15), log(hunters));
+    return 1;
+}
+
+int tribe::stdCycle()
+{
+    //eating
+    double toEat = 0;
+    for(unsigned i = 0; i < tribesmen.size(); ++i)//unsigned to end warn
+    {
+        if((tribesmen.at(i).isMale() && tribesmen.at(i).getAge() >= 20) ||
+          (!tribesmen.at(i).isMale() && tribesmen.at(i).getAge() >= 16)) //is grown
+        {
+            toEat++;
+        }
+        else
+        {
+            if(tribesmen.at(i).isMale())
+            {
+                toEat += tribesmen.at(i).getWeight() / 200;
+            }
+            else
+            {
+                toEat += 0.8 * (tribesmen.at(i).getWeight() / 200);
+            }
+        }
+    }
+    storedFood -= toEat;
+    while(storedFood < 0)
+    {
+        killRandom();
+        storedFood++;
+    }
+
+    return 1;
+}
+
+int tribe::killRandom()
+{
+    if(tribesmen.size() == 0)
+    {
+        return 1;
+    }
+    int toKill = rand() % tribesmen.size();
+    tribesmen.erase(tribesmen.begin() + toKill);
+    return 1;
 }

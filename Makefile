@@ -8,7 +8,7 @@ all: cws2
 cws2: main.o person.o util.o tribe.o
 	$(CC) $(CFLAGS) main.o person.o util.o tribe.o -o $(EXECUTABLE)
 
-main.o: main.cpp
+main.o: main.cpp tribe.hpp
 	$(CC) $(CFLAGS) -c main.cpp
 
 person.o: person.cpp person.hpp util.hpp
@@ -17,7 +17,7 @@ person.o: person.cpp person.hpp util.hpp
 util.o: util.cpp util.hpp
 	$(CC) $(CFLAGS) -c util.cpp
 
-tribe.o: tribe.cpp tribe.hpp
+tribe.o: tribe.cpp tribe.hpp util.hpp person.hpp
 	$(CC) $(CFLAGS) -c tribe.cpp
 
 

@@ -22,6 +22,10 @@ class tribe
         int addFood(int);
         std::vector<int> averageStats(void);
         int males(void);
+        int getTech(void);
+        int hunt(int);
+        int stdCycle(void);
+        int killRandom(void);
 };
 
 #endif

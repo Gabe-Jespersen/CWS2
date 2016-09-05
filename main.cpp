@@ -12,21 +12,24 @@ int main(int argc, char** argv)
     srand(time(NULL));//seeding random
 
     int tribeChoice = 4;
-    tribe alpha;//making
-    tribe beta; //three
-    tribe cappa;//tribes
 
-    for(int i = 0; i < 100; i++)
+    int tribeNumber = 3;
+    if(tribeNumber > 9)
     {
-        alpha.forceBirth();
+        return 0;
     }
-    for(int i = 0; i < 100; i++)
+
+    int initPopulation = 50;
+
+    vector<tribe> tribes;
+    tribes.resize(tribeNumber);
+
+    for(int i = 0; i < tribeNumber; i++)
     {
-        beta.forceBirth();
-    }
-    for(int i = 0; i < 100; i++)
-    {
-        cappa.forceBirth();
+        for(int j = 0; j < initPopulation; j++)
+        {
+            tribes.at(i).forceBirth();
+        }
     }
 
     //this is an abortion of ncurses
@@ -37,8 +40,11 @@ int main(int argc, char** argv)
     while(tribeChoice == 4)
     {
         move(0,0);
-        printw("Alpha [ ]\nBeta  [ ]\nCappa [ ]\n");
-        move(choice, 7);
+        for(int i = 0; i < tribeNumber; ++i)
+        {
+            printw("Tribe %d [ ]\n", i);
+        }
+        move(choice, 9);
         refresh();
 
         int temp = getch();
@@ -56,12 +62,26 @@ int main(int argc, char** argv)
         }
         if(choice < 0)
         {
-            choice = 2;
+            choice = tribeNumber - 1;
         }
-        if(choice > 2)
+        if(choice > tribeNumber - 1)
         {
             choice = 0;
         }
+    }
+
+    //temp
+    clear();
+    for(int i = 0; i < 100; ++i)
+    {
+        for(int j = 0; j < tribeNumber; ++j)
+        {
+            tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+            tribes.at(j).stdCycle();
+            printw("%d\n",tribes.at(j).getTribesmen().size());
+        }
+        printw("\n");
+        refresh();
     }
 
     endwin();
