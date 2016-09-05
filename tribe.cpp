@@ -12,6 +12,7 @@ int tribe::birth()
     //temp
     person temp;
     temp.generateRandom();
+    temp.setAge(0);
     tribesmen.push_back(temp);
     return 1;
 }
@@ -109,6 +110,12 @@ int tribe::hunt(int hunters)
     return 1;
 }
 
+int tribe::forage(int foragers)
+{
+    storedFood += 0.1*foragers;
+    return 1;
+}
+
 int tribe::stdCycle()
 {
     //eating
@@ -139,6 +146,42 @@ int tribe::stdCycle()
         storedFood++;
     }
 
+    //aging
+    for(unsigned i = 0; i < tribesmen.size(); ++i)
+    {
+        tribesmen.at(i).makeOlder();
+    }
+
+    //mating
+    for(unsigned i = 0; i < tribesmen.size(); ++i)
+    {
+        if(tribesmen.at(i).isMale() && tribesmen.at(i).getAge() > 16 &&
+                                       tribesmen.at(i).getAge() < 40)
+        {
+            for(unsigned j = 0; j < tribesmen.size(); ++j)
+            {
+                if(!tribesmen.at(j).isMale() && tribesmen.at(j).getAge() > 16 && 
+                                                tribesmen.at(j).getAge() < 40 &&
+                                                rand() % (1) == 0)
+                                                //math is hard
+                {
+                    birth();
+                }
+            }
+            break;
+        }
+    }
+
+    //dying
+    //temp
+    for(unsigned i = 0; i < tribesmen.size(); ++i)
+    {
+        if(rand()%(10+(3*int(log(technology))))==0)
+        {
+            killRandom();
+        }
+    }
+
     return 1;
 }
 
@@ -149,6 +192,16 @@ int tribe::killRandom()
         return 1;
     }
     int toKill = rand() % tribesmen.size();
+    tribesmen.erase(tribesmen.begin() + toKill);
+    return 1;
+}
+
+int tribe::kill(int toKill)
+{
+    if(tribesmen.size() == 0)
+    {
+        return 1;
+    }
     tribesmen.erase(tribesmen.begin() + toKill);
     return 1;
 }

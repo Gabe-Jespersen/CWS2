@@ -87,3 +87,14 @@ string person::getName()
 {
     return name;
 }
+
+int person::setAge(int toSet)
+{
+    age = toSet;
+    return 1;
+}
+int person::makeOlder()
+{
+    age++;
+    return 1;
+}

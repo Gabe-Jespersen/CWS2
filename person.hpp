@@ -22,6 +22,8 @@ class person
         int getChar(void);
         bool isMale(void);
         std::string getName(void);
+        int setAge(int);
+        int makeOlder(void);
 };
 
 #endif

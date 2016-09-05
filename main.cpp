@@ -13,18 +13,18 @@ int main(int argc, char** argv)
 
     int tribeChoice = 4;
 
-    int tribeNumber = 3;
-    if(tribeNumber > 9)
+    int tribeNumber = 10;
+    if(tribeNumber > 99)
     {
         return 0;
     }
 
-    int initPopulation = 50;
+    int initPopulation = 100;
 
     vector<tribe> tribes;
     tribes.resize(tribeNumber);
 
-    for(int i = 0; i < tribeNumber; i++)
+    for(unsigned i = 0; i < tribes.size(); i++)
     {
         for(int j = 0; j < initPopulation; j++)
         {
@@ -36,11 +36,11 @@ int main(int argc, char** argv)
     initscr();
     keypad(stdscr, TRUE);//reads arrow keys
 
-    int choice = 0;
+    unsigned choice = 0;
     while(tribeChoice == 4)
     {
         move(0,0);
-        for(int i = 0; i < tribeNumber; ++i)
+        for(unsigned i = 0; i < tribes.size(); ++i)
         {
             printw("Tribe %d [ ]\n", i);
         }
@@ -62,23 +62,27 @@ int main(int argc, char** argv)
         }
         if(choice < 0)
         {
-            choice = tribeNumber - 1;
+            choice = tribes.size() - 1;
         }
-        if(choice > tribeNumber - 1)
+        if(choice > tribes.size() - 1)
         {
             choice = 0;
         }
     }
 
     //temp
-    clear();
-    for(int i = 0; i < 100; ++i)
+    for(int i = 0; i < 1000; ++i)
     {
-        for(int j = 0; j < tribeNumber; ++j)
+        clear();
+        for(unsigned j = 0; j < tribes.size(); ++j)
         {
             tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
             tribes.at(j).stdCycle();
-            printw("%d\n",tribes.at(j).getTribesmen().size());
+            printw("%d,%d\n",tribes.at(j).getTribesmen().size(),tribes.at(j).getFood());
+            if(tribes.at(j).getTribesmen().size() == 0)
+            {
+                tribes.erase(tribes.begin() + j);
+            }
         }
         printw("\n");
         refresh();
