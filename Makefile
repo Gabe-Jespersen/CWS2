@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -std=c++11 -Wall
+CFLAGS = -g -std=c++11 -Wall -lncurses
 INSTALLPATH = ./
 EXECUTABLE = cws2
 
