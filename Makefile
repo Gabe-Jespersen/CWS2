@@ -5,20 +5,20 @@ EXECUTABLE = cws2
 
 all: cws2
 
-cws2: main.o world.o person.o util.o
-	$(CC) $(CFLAGS) main.o world.o person.o util.o -o $(EXECUTABLE)
+cws2: main.o person.o util.o tribe.o
+	$(CC) $(CFLAGS) main.o person.o util.o tribe.o -o $(EXECUTABLE)
 
-main.o: main.cpp world.hpp
+main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
-
-world.o: world.cpp world.hpp
-	$(CC) $(CFLAGS) -c world.cpp
 
 person.o: person.cpp person.hpp util.hpp
 	$(CC) $(CFLAGS) -c person.cpp
 
 util.o: util.cpp util.hpp
 	$(CC) $(CFLAGS) -c util.cpp
+
+tribe.o: tribe.cpp tribe.hpp
+	$(CC) $(CFLAGS) -c tribe.cpp
 
 
 install:

@@ -25,3 +25,22 @@ double gaussian(int base, int standardDeviation)
     answer += base;//adds the base
     return answer;
 }
+
+int makeWeight(int height, int age, bool male)
+{
+    int idealWeight = 100 + (5.1 * (height-60));//Devine formula
+    int realWeight;
+
+    if(male)
+    {
+        idealWeight += 10;
+    }
+
+    do
+    {
+        realWeight = gaussian(idealWeight, idealWeight/10);
+    }
+    while(realWeight < idealWeight * 0.5);
+
+    return realWeight;
+}

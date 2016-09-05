@@ -9,7 +9,8 @@ class tribe
 {
     private:
         std::vector<person> tribesmen;
-        int storedFood;
+        int storedFood = 50;
+        int technology = 0;
         int birth(void);
         int eat(void);
 
@@ -19,6 +20,8 @@ class tribe
         int getFood(void);
         int forceBirth(void);
         int addFood(int);
+        std::vector<int> averageStats(void);
+        int males(void);
 };
 
 #endif

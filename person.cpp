@@ -9,24 +9,25 @@ using namespace std;
 int person::generateRandom()
 {
     //temp
-    bool male = rand()%2;
+    male = rand()%2;//rng 50/50
 
     if(male)
     {
-        string name = "Bob";
-        int height = gaussian(3,70);
+        name = "Bob";
+        height = gaussian(70,3);//for men, average height is 5'10", stddev is 3"
     }
     else
     {
-        string name = "Bobbette";
+        name = "Bobbette";
+        height = gaussian(65,3);//average height is about 5'5"
     }
 
-    int age = rand()%100;
-    int weight = 0;
-    int intelligence = 0;
-    int strength = 0;
-    int creativity = 0;
-    int charisma = 0;
+    age = rand()%100;//random between 0 and 99
+    weight = makeWeight(height, age, male);//estimate based on ideal weight
+    intelligence = gaussian(100,15);//iq
+    strength = 0;//need to figure in height
+    creativity = gaussian(100,10);//felt like it
+    charisma = gaussian(100,20);//see above
 
     return 1; //ISO is retarded
 }
@@ -34,17 +35,18 @@ int person::generateRandom()
 int person::generateBased(int toWeight, int toHeight, int toAge, int toInt, int
                           toStr, int toCre, int toChar, bool toMale, string toName)
 {
-    int weight = toWeight;
-    int height = toHeight;
-    int age = toAge;
-    int intelligence = toInt;
-    int strength = toStr;
-    int creativity = toCre;
-    int charisma = toChar;
+    //just copy what was given
+    weight = toWeight;
+    height = toHeight;
+    age = toAge;
+    intelligence = toInt;
+    strength = toStr;
+    creativity = toCre;
+    charisma = toChar;
 
-    bool male = toMale;
+    male = toMale;
 
-    string name = toName;
+    name = toName;
     
     return 1; //ISO is retarded
 }
@@ -68,6 +70,10 @@ int person::getInt()
 int person::getStr()
 {
     return strength;
+}
+int person::getCre()
+{
+    return creativity;
 }
 int person::getChar()
 {

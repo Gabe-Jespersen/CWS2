@@ -1,9 +1,8 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <iostream>
 
-#include "world.hpp"
+#include "tribe.hpp"
 
 using namespace std;
 
@@ -11,8 +10,22 @@ int main(int argc, char** argv)
 {
     srand(time(NULL));//seeding random
 
-    int worldSize = 50;//size of world, is a square
-    vector<vector<int>> world = makeWorld(worldSize);//initializing map
+    tribe alpha;//making
+    tribe beta; //three
+    tribe cappa;//tribes
+
+    for(int i = 0; i < 100; i++)
+    {
+        alpha.forceBirth();
+    }
+    for(int i = 0; i < 100; i++)
+    {
+        beta.forceBirth();
+    }
+    for(int i = 0; i < 100; i++)
+    {
+        cappa.forceBirth();
+    }
 
     return 0;
 }
