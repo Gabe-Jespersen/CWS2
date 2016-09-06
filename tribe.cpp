@@ -112,7 +112,7 @@ int tribe::hunt(int hunters)
 
 int tribe::forage(int foragers)
 {
-    storedFood += 0.1*foragers;
+    storedFood += 0.7*foragers;
     return 1;
 }
 
@@ -142,7 +142,10 @@ int tribe::stdCycle()
     storedFood -= toEat;
     while(storedFood < 0)
     {
-        killRandom();
+        if(tribesmen.size() > 0)
+        {
+            killRandom();
+        }
         storedFood++;
     }
 
@@ -162,7 +165,7 @@ int tribe::stdCycle()
             {
                 if(!tribesmen.at(j).isMale() && tribesmen.at(j).getAge() > 16 && 
                                                 tribesmen.at(j).getAge() < 40 &&
-                                                rand() % (1) == 0)
+                                                rand() % 1 == 0)
                                                 //math is hard
                 {
                     birth();
@@ -176,7 +179,7 @@ int tribe::stdCycle()
     //temp
     for(unsigned i = 0; i < tribesmen.size(); ++i)
     {
-        if(rand()%(10+(3*int(log(technology))))==0)
+        if(rand()%((health/10000)+10+(3*int(log(technology/10))))==0)
         {
             killRandom();
         }
@@ -203,5 +206,83 @@ int tribe::kill(int toKill)
         return 1;
     }
     tribesmen.erase(tribesmen.begin() + toKill);
+    return 1;
+}
+
+int tribe::aiCycle()
+{
+    vector<person> toForage;
+    vector<person> toHunt;
+    vector<person> toCare;
+    vector<person> toResearch;
+    vector<person> toCreate;
+
+    for(unsigned i = 0; i < tribesmen.size(); ++i)
+    {
+        int skill = tribesmen.at(i).getInt() / 20;
+        {
+            if(tribesmen.at(i).getCre() > 150)
+            {
+                toCreate.push_back(tribesmen.at(i));
+            }
+            else if(skill > 6)
+            {
+                toResearch.push_back(tribesmen.at(i));
+            }
+            else if(skill > 4 && !tribesmen.at(i).isMale())
+            {
+                toCare.push_back(tribesmen.at(i));
+            }
+            else if(skill > 3 && tribesmen.at(i).isMale())
+            {
+                toHunt.push_back(tribesmen.at(i));
+            }
+            else
+            {
+                toForage.push_back(tribesmen.at(i));
+            }
+        }
+    }
+    
+    forage(toForage.size());
+    for(unsigned i = 0; i < toForage.size(); ++i)
+    {
+        if(toForage.at(i).getHeight() > 72)
+        {
+            storedFood++;//bonus for tall foragers
+        }
+    }
+
+    hunt(toHunt.size());
+    for(unsigned i = 0; i < toHunt.size(); ++i)
+    {
+        if(toHunt.at(i).getStr() < 50)
+        {
+            killRandom();//if people are weak and hunt, others die
+        }
+    }
+
+    create(toCreate.size());
+
+    research(toResearch.size());
+
+    care(toCare.size());
+
+    return 1;
+}
+
+int tribe::create(int people)
+{
+    art += people/10;
+    return 1;
+}
+int tribe::research(int researchers)
+{
+    technology += researchers / 100;
+    return 1;
+}
+int tribe::care(int toCare)
+{
+    health += toCare;
     return 1;
 }

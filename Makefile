@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -std=c++11 -Wall -lncurses
+CFLAGS = -pg -std=c++11 -Wall -lncurses -pthread
 INSTALLPATH = ./
 EXECUTABLE = cws2
 

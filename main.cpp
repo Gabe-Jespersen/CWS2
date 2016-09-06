@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <ncurses.h>
+#include <thread>
+#include <string>
 
 #include "tribe.hpp"
 
@@ -71,12 +73,19 @@ int main(int argc, char** argv)
     }
 
     //temp
-    for(int i = 0; i < 1000; ++i)
+    for(int i = 0; i < 1000000; ++i)
     {
+        if(tribes.size() == 0)
+        {
+            break;
+        }
+
         clear();
+
         for(unsigned j = 0; j < tribes.size(); ++j)
         {
-            tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+            //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+            tribes.at(j).aiCycle();
             tribes.at(j).stdCycle();
             printw("%d,%d\n",tribes.at(j).getTribesmen().size(),tribes.at(j).getFood());
             if(tribes.at(j).getTribesmen().size() == 0)
@@ -84,6 +93,7 @@ int main(int argc, char** argv)
                 tribes.erase(tribes.begin() + j);
             }
         }
+
         printw("\n");
         refresh();
     }
