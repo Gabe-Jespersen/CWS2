@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <ncurses.h>
-#include <thread>
 #include <string>
 
 #include "tribe.hpp"
@@ -11,7 +10,8 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    srand(time(NULL));//seeding random
+    srand(0);//testing
+    //srand(time(NULL));//seeding random
 
     int tribeChoice = 4;
 
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    int initPopulation = 100;
+    int initPopulation = 1000;
 
     vector<tribe> tribes;
     tribes.resize(tribeNumber);
@@ -39,6 +39,11 @@ int main(int argc, char** argv)
     keypad(stdscr, TRUE);//reads arrow keys
 
     unsigned choice = 0;
+
+    //temp
+    tribeChoice = 0;
+    //temp
+    
     while(tribeChoice == 4)
     {
         move(0,0);
@@ -73,7 +78,7 @@ int main(int argc, char** argv)
     }
 
     //temp
-    for(int i = 0; i < 1000000; ++i)
+    while(true)
     {
         if(tribes.size() == 0)
         {
@@ -84,13 +89,26 @@ int main(int argc, char** argv)
 
         for(unsigned j = 0; j < tribes.size(); ++j)
         {
-            //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+            tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
             tribes.at(j).aiCycle();
             tribes.at(j).stdCycle();
-            printw("%d,%d\n",tribes.at(j).getTribesmen().size(),tribes.at(j).getFood());
+            printw("%d,%d,%d\n",tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
             if(tribes.at(j).getTribesmen().size() == 0)
             {
                 tribes.erase(tribes.begin() + j);
+
+                //temp
+                /*
+                for(int i = 0; i < 1000; ++i)
+                {
+                    tribes.at(j).forceBirth();
+                }
+                */
+            }
+            if(tribes.at(j).getTech() >= 100)//current win condition
+            {
+                endwin();
+                return 0;
             }
         }
 

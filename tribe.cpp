@@ -1,5 +1,6 @@
 #include <vector>
 #include <cmath>
+#include <cstdlib>
 
 #include "tribe.hpp"
 #include "person.hpp"
@@ -179,7 +180,7 @@ int tribe::stdCycle()
     //temp
     for(unsigned i = 0; i < tribesmen.size(); ++i)
     {
-        if(rand()%((health/10000)+10+(3*int(log(technology/10))))==0)
+        if(rand()%((health/10000)+20+(3*int(log(technology/10))))==0)
         {
             killRandom();
         }
@@ -253,10 +254,10 @@ int tribe::aiCycle()
         }
     }
 
-    hunt(toHunt.size());
+    //hunt(toHunt.size());
     for(unsigned i = 0; i < toHunt.size(); ++i)
     {
-        if(toHunt.at(i).getStr() < 50)
+        if(toHunt.at(i).getStr() < 80)
         {
             killRandom();//if people are weak and hunt, others die
         }
@@ -278,7 +279,7 @@ int tribe::create(int people)
 }
 int tribe::research(int researchers)
 {
-    technology += researchers / 100;
+    technology += researchers / 5;
     return 1;
 }
 int tribe::care(int toCare)

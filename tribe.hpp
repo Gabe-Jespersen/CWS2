@@ -11,7 +11,7 @@ class tribe
         std::vector<person> tribesmen;
         int storedFood = 50;
         int health = 0;
-        double technology = 2;
+        double technology = 1;
         int art = 0;
         int birth(void);
         int eat(void);
