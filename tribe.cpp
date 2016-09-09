@@ -180,7 +180,7 @@ int tribe::stdCycle()
     //temp
     for(unsigned i = 0; i < tribesmen.size(); ++i)
     {
-        if(rand()%((health/10000)+20+(3*int(log(technology/10))))==0)
+        if(rand()%((health/10000)+16+(3*int(log(technology/10))))==0)
         {
             killRandom();
         }
