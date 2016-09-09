@@ -132,11 +132,11 @@ int tribe::stdCycle()
         {
             if(tribesmen.at(i).isMale())
             {
-                toEat += tribesmen.at(i).getWeight() / 100;
+                toEat += tribesmen.at(i).getWeight() / 200;
             }
             else
             {
-                toEat += 0.8 * (tribesmen.at(i).getWeight() / 100);
+                toEat += 0.8 * (tribesmen.at(i).getWeight() / 200);
             }
         }
     }
@@ -180,7 +180,7 @@ int tribe::stdCycle()
     //temp
     for(unsigned i = 0; i < tribesmen.size(); ++i)
     {
-        if(rand()%((health/10000)+16+(3*int(log(technology/10))))==0)
+        if(rand()%((health/10000)+15+(3*int(log(technology/10))))==0)
         {
             killRandom();
         }

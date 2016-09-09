@@ -1,10 +1,12 @@
 #include <vector>
+#include <thread>
 #include <cstdlib>
 #include <ctime>
 #include <ncurses.h>
 #include <string>
 
 #include "tribe.hpp"
+#include "util.hpp"
 
 using namespace std;
 
@@ -87,28 +89,36 @@ int main(int argc, char** argv)
 
         clear();
 
-        for(unsigned j = 0; j < tribes.size(); ++j)
+        if(tribes.size() == 1)
         {
-            //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
-            tribes.at(j).aiCycle();
-            tribes.at(j).stdCycle();
-            printw("Tribe %d: %d,%d,%d\n",tribes.at(j).getNumber(), tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
-            if(tribes.at(j).getTech() >= 1000)//current win condition
+            printw("Tribe %d wins\n",tribes.at(0).getNumber());//should be only tribe
+            refresh();
+            getch();
+            endwin();
+            return 1;
+        }
+        else
+        {
+            for(unsigned j = 0; j < tribes.size(); ++j)
             {
-                endwin();
-                return 0;
-            }
-            if(tribes.at(j).getTribesmen().size() == 0)
-            {
-                tribes.erase(tribes.begin() + j);
-
-                //temp
-                /*
-                for(int i = 0; i < 1000; ++i)
+                if(tribes.at(j).getTech() >= 1000)//current win condition
                 {
-                    tribes.at(j).forceBirth();
+                    clear();
+                    printw("Tribe %d wins\n",tribes.at(j).getNumber());
+                    refresh();
+                    endwin();
+                    return 1;
                 }
-                */
+                else if(tribes.at(j).getTribesmen().size() == 0)//if they're dead
+                {
+                    tribes.erase(tribes.begin() + j);
+                    break;
+                }
+                //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+                tribes.at(j).aiCycle();
+                tribes.at(j).stdCycle();
+                printw("Tribe %d: %d,%d,%d\n",tribes.at(j).getNumber(), 
+                tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
             }
         }
 
