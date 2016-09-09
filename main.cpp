@@ -10,8 +10,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    srand(0);//testing
-    //srand(time(NULL));//seeding random
+    srand(time(NULL));//seeding random
 
     int tribeChoice = 4;
 
@@ -28,6 +27,7 @@ int main(int argc, char** argv)
 
     for(unsigned i = 0; i < tribes.size(); i++)
     {
+        tribes.at(i).setNumber(i);
         for(int j = 0; j < initPopulation; j++)
         {
             tribes.at(i).forceBirth();
@@ -89,10 +89,15 @@ int main(int argc, char** argv)
 
         for(unsigned j = 0; j < tribes.size(); ++j)
         {
-            tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
+            //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
             tribes.at(j).aiCycle();
             tribes.at(j).stdCycle();
-            printw("%d,%d,%d\n",tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
+            printw("Tribe %d: %d,%d,%d\n",tribes.at(j).getNumber(), tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
+            if(tribes.at(j).getTech() >= 1000)//current win condition
+            {
+                endwin();
+                return 0;
+            }
             if(tribes.at(j).getTribesmen().size() == 0)
             {
                 tribes.erase(tribes.begin() + j);
@@ -105,14 +110,8 @@ int main(int argc, char** argv)
                 }
                 */
             }
-            if(tribes.at(j).getTech() >= 100)//current win condition
-            {
-                endwin();
-                return 0;
-            }
         }
 
-        printw("\n");
         refresh();
     }
 

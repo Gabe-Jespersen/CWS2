@@ -113,7 +113,7 @@ int tribe::hunt(int hunters)
 
 int tribe::forage(int foragers)
 {
-    storedFood += 0.7*foragers;
+    storedFood += foragers;
     return 1;
 }
 
@@ -132,11 +132,11 @@ int tribe::stdCycle()
         {
             if(tribesmen.at(i).isMale())
             {
-                toEat += tribesmen.at(i).getWeight() / 200;
+                toEat += tribesmen.at(i).getWeight() / 100;
             }
             else
             {
-                toEat += 0.8 * (tribesmen.at(i).getWeight() / 200);
+                toEat += 0.8 * (tribesmen.at(i).getWeight() / 100);
             }
         }
     }
@@ -226,11 +226,11 @@ int tribe::aiCycle()
             {
                 toCreate.push_back(tribesmen.at(i));
             }
-            else if(skill > 6)
+            else if(skill > 7)
             {
                 toResearch.push_back(tribesmen.at(i));
             }
-            else if(skill > 4 && !tribesmen.at(i).isMale())
+            else if(skill > 4 && !tribesmen.at(i).isMale() && rand() % 4 == 0)
             {
                 toCare.push_back(tribesmen.at(i));
             }
@@ -254,14 +254,21 @@ int tribe::aiCycle()
         }
     }
 
-    //hunt(toHunt.size());
-    for(unsigned i = 0; i < toHunt.size(); ++i)
+    if(storedFood < 5 * tribesmen.size())
     {
-        if(toHunt.at(i).getStr() < 80)
+        hunt(toHunt.size());
+        for(unsigned i = 0; i < toHunt.size(); ++i)
         {
-            killRandom();//if people are weak and hunt, others die
+            if(toHunt.at(i).getStr() < 80)
+            {
+                killRandom();//if people are weak and hunt, others die
+            }
         }
     }
+    else
+    {
+    }
+
 
     create(toCreate.size());
 
@@ -279,11 +286,26 @@ int tribe::create(int people)
 }
 int tribe::research(int researchers)
 {
-    technology += researchers / 5;
+    for(int i = 0; i < researchers; ++i)
+    {
+        if(rand() % 10 == 0)
+        {
+            technology += researchers;
+        }
+    }
     return 1;
 }
 int tribe::care(int toCare)
 {
     health += toCare;
     return 1;
+}
+int tribe::setNumber(int toSet)
+{
+    number = toSet;
+    return 1;
+}
+int tribe::getNumber()
+{
+    return number;
 }
