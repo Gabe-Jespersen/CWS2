@@ -19,13 +19,13 @@ class tribe
 
     public:
         int end(void);
-        std::vector<person> getTribesmen(void);
-        int getFood(void);
+        std::vector<person> getTribesmen(void) const;
+        int getFood(void) const;
         int forceBirth(void);
         int addFood(int);
-        std::vector<int> averageStats(void);
-        int males(void);
-        int getTech(void);
+        std::vector<int> averageStats(void) const;
+        int males(void) const;
+        int getTech(void) const;
         int hunt(int);
         int forage(int);
         int stdCycle(void);
@@ -36,7 +36,7 @@ class tribe
         int research(int);
         int care(int);
         int setNumber(int);
-        int getNumber(void);
+        int getNumber(void) const;
 };
 
 #endif
