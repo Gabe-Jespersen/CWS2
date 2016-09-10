@@ -17,13 +17,13 @@ int main(int argc, char** argv)
 
     int tribeChoice = 4;
 
-    int tribeNumber = 10;
+    int tribeNumber = 40;
     if(tribeNumber > 99)
     {
         return 0;
     }
 
-    int initPopulation = 1000;
+    int initPopulation = 100000;
 
     vector<tribe> tribes;
     tribes.resize(tribeNumber);
@@ -127,18 +127,18 @@ int main(int argc, char** argv)
         */
 
         //initiate multiAIDS
-        printw("mark 1\n");
-        refresh();
+        //printw("mark 1\n");
+        //refresh();
         //getch();
         for(unsigned i = 0; i < tribes.size(); ++i)
         {
-            printw("0test #%d\n", i);//fuck i
+            //printw("0test #%d\n", i);//fuck i
             /*
             threads.push_back(thread([        &i]{printw("1test #%d\n", i);}));
             threads.at(i).join();
             threads.erase(threads.begin() + i);
             */
-            threads.push_back(thread([tribes,i]{printw("2test #%d\n", i);//really fuck i
+            threads.push_back(thread([&tribes,i]{//printw("2test #%d\n", i);//really fuck i
                                                 tribes.at(i).aiCycle();
                                                 tribes.at(i).stdCycle();
                                                 printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
@@ -147,22 +147,22 @@ int main(int argc, char** argv)
                                                 }));
             //threads.push_back(thread([]{printw("test\n");}));
         }
-        printw("mark 2\n");
-        refresh();
+        //printw("mark 2\n");
+        //refresh();
         //getch();
         for(unsigned i = 0; i < tribes.size(); ++i)
         {
             threads.at(i).join();
         }
-        printw("mark 3\n");
-        refresh();
+        //printw("mark 3\n");
+        //refresh();
         //getch();
         for(unsigned i = 0; i < tribes.size(); ++i)
         {
             threads.erase(threads.begin() + i);
         }
-        printw("mark 4\n");
-        refresh();
+        //printw("mark 4\n");
+        //refresh();
         //getch();
 
         refresh();

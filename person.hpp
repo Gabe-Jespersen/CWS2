@@ -10,14 +10,14 @@ class person
     public:
         int generateRandom();
         int generateBased(int,int,int,int,int,int,int,bool);
-        int getWeight(void);
-        int getHeight(void);
-        int getAge(void);
-        int getInt(void);
-        int getStr(void);
-        int getCre(void);
-        int getChar(void);
-        bool isMale(void);
+        int getWeight(void) const;
+        int getHeight(void) const;
+        int getAge(void) const;
+        int getInt(void) const;
+        int getStr(void) const;
+        int getCre(void) const;
+        int getChar(void) const;
+        bool isMale(void) const;
         int setAge(int);
         int makeOlder(void);
 };

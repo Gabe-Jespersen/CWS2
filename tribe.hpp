@@ -12,7 +12,7 @@ class tribe
         int number;
         int storedFood = 0;
         int health = 0;
-        double technology = 1;
+        double technology = 100;
         int art = 0;
         int birth(void);
         int eat(void);

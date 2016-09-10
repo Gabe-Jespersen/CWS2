@@ -53,35 +53,35 @@ int person::generateBased(int toWeight, int toHeight, int toAge, int toInt, int
     return 1; //ISO is retarded
 }
 
-int person::getWeight()
+int person::getWeight() const
 {
     return weight;
 }
-int person::getHeight()
+int person::getHeight() const
 {
     return height;
 }
-int person::getAge()
+int person::getAge() const
 {
     return age;
 }
-int person::getInt()
+int person::getInt() const
 {
     return intelligence;
 }
-int person::getStr()
+int person::getStr() const
 {
     return strength;
 }
-int person::getCre()
+int person::getCre() const
 {
     return creativity;
 }
-int person::getChar()
+int person::getChar() const
 {
     return charisma;
 }
-bool person::isMale()
+bool person::isMale() const
 {
     return male;
 }
