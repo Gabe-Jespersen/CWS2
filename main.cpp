@@ -138,15 +138,13 @@ int main(int argc, char** argv)
             threads.at(i).join();
             threads.erase(threads.begin() + i);
             */
-            threads.push_back(thread([&tribes,&i]{printw("2test #%d\n", i);//really fuck i
-                                                  /*
-                                                  tribes.at(i).aiCycle();
-                                                  tribes.at(i).stdCycle();
-                                                  printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
-                                                  tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),
-                                                  tribes.at(i).getTech());
-                                                  */
-                                                  }));
+            threads.push_back(thread([tribes,i]{printw("2test #%d\n", i);//really fuck i
+                                                tribes.at(i).aiCycle();
+                                                tribes.at(i).stdCycle();
+                                                printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
+                                                tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),
+                                                tribes.at(i).getTech());
+                                                }));
             //threads.push_back(thread([]{printw("test\n");}));
         }
         printw("mark 2\n");
@@ -165,7 +163,7 @@ int main(int argc, char** argv)
         }
         printw("mark 4\n");
         refresh();
-        getch();
+        //getch();
 
         refresh();
     }
