@@ -17,13 +17,13 @@ int main(int argc, char** argv)
 
     int tribeChoice = 4;
 
-    int tribeNumber = 40;
+    int tribeNumber = 10;
     if(tribeNumber > 99)
     {
         return 0;
     }
 
-    int initPopulation = 100000;
+    int initPopulation = 1000;
 
     vector<tribe> tribes;
     tribes.resize(tribeNumber);
