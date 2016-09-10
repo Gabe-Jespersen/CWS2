@@ -91,27 +91,27 @@ int main(int argc, char** argv)
 
         clear();
 
-        for(unsigned j = 0; j < tribes.size(); ++j)//end/win/kill/whatever
+        for(unsigned i = 0; i < tribes.size(); ++i)//end/win/kill/whatever
         {
-            if(tribes.at(j).getTech() >= 1000 || tribes.size() == 1)//current win condition
+            if(tribes.at(i).getTech() >= 1000 || tribes.size() == 1)//current win condition
             {
                 clear();
-                printw("Tribe %d wins\n",tribes.at(j).getNumber());
+                printw("Tribe %d wins\n",tribes.at(i).getNumber());
                 refresh();
                 getch();
                 endwin();
                 return 1;
             }
-            else if(tribes.at(j).getTribesmen().size() == 0)//if they're dead
+            else if(tribes.at(i).getTribesmen().size() == 0)//if they're dead
             {
-                tribes.erase(tribes.begin() + j);
+                tribes.erase(tribes.begin() + i);
             }
             /*
-            //tribes.at(j).hunt(tribes.at(j).getTribesmen().size());
-            tribes.at(j).aiCycle();
-            tribes.at(j).stdCycle();
-            printw("Tribe %d: %d,%d,%d\n",tribes.at(j).getNumber(), 
-            tribes.at(j).getTribesmen().size(),tribes.at(j).getFood(),tribes.at(j).getTech());
+            //tribes.at(i).hunt(tribes.at(i).getTribesmen().size());
+            tribes.at(i).aiCycle();
+            tribes.at(i).stdCycle();
+            printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(), 
+            tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),tribes.at(i).getTech());
             */
         }
 
@@ -132,18 +132,26 @@ int main(int argc, char** argv)
         //getch();
         for(unsigned i = 0; i < tribes.size(); ++i)
         {
-            threads.push_back(thread([&tribes,&i]{printw("test\n");
+            printw("0test #%d\n", i);//fuck i
+            /*
+            threads.push_back(thread([        &i]{printw("1test #%d\n", i);}));
+            threads.at(i).join();
+            threads.erase(threads.begin() + i);
+            */
+            threads.push_back(thread([&tribes,&i]{printw("2test #%d\n", i);//really fuck i
+                                                  /*
                                                   tribes.at(i).aiCycle();
                                                   tribes.at(i).stdCycle();
                                                   printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
                                                   tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),
                                                   tribes.at(i).getTech());
+                                                  */
                                                   }));
             //threads.push_back(thread([]{printw("test\n");}));
         }
         printw("mark 2\n");
         refresh();
-        getch();
+        //getch();
         for(unsigned i = 0; i < tribes.size(); ++i)
         {
             threads.at(i).join();
@@ -157,7 +165,7 @@ int main(int argc, char** argv)
         }
         printw("mark 4\n");
         refresh();
-        //getch();
+        getch();
 
         refresh();
     }
