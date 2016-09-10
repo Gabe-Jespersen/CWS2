@@ -32,12 +32,12 @@ int tribe::end()
     return 1;
 }
 
-vector<person> tribe::getTribesmen()
+vector<person> tribe::getTribesmen() const
 {
     return tribesmen;
 }
 
-int tribe::getFood()
+int tribe::getFood() const
 {
     return storedFood;
 }
@@ -54,7 +54,7 @@ int tribe::addFood(int toAdd)
     return 1;
 }
 
-vector<int> tribe::averageStats()
+vector<int> tribe::averageStats() const
 {
     vector<int> temporaryStats;
 
@@ -85,7 +85,7 @@ vector<int> tribe::averageStats()
     return temporaryStats;
 }
 
-int tribe::males()
+int tribe::males() const
 {
     int temp = 0;
 
@@ -100,7 +100,7 @@ int tribe::males()
     return temp;
 }
 
-int tribe::getTech()
+int tribe::getTech() const
 {
     return technology;
 }
@@ -305,7 +305,7 @@ int tribe::setNumber(int toSet)
     number = toSet;
     return 1;
 }
-int tribe::getNumber()
+int tribe::getNumber() const
 {
     return number;
 }
