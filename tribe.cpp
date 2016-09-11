@@ -166,7 +166,7 @@ int tribe::stdCycle()
             {
                 if(!tribesmen.at(j).isMale() && tribesmen.at(j).getAge() > 16 && 
                                                 tribesmen.at(j).getAge() < 40 &&
-                                                rand() % 1 == 0)
+                                                rand() % 4 > 0)
                                                 //math is hard
                 {
                     birth();

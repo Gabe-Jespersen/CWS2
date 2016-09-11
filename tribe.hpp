@@ -1,4 +1,5 @@
 #include <vector>
+#include <cmath>
 
 #include "person.hpp"
 
@@ -12,7 +13,7 @@ class tribe
         int number;
         int storedFood = 0;
         int health = 0;
-        double technology = 100;
+        double technology = std::sqrt(10);
         int art = 0;
         int birth(void);
         int eat(void);
