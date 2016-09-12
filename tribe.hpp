@@ -13,10 +13,12 @@ class tribe
         int number;
         int storedFood = 0;
         int health = 0;
-        double technology = std::sqrt(10);
+        double technology = std::log(3.5);
         int art = 0;
         int birth(void);
         int eat(void);
+        int happiness = 0;
+        int age = 0;
 
     public:
         int end(void);
@@ -26,7 +28,7 @@ class tribe
         int addFood(int);
         std::vector<int> averageStats(void) const;
         int males(void) const;
-        int getTech(void) const;
+        double getTech(void) const;
         int hunt(int);
         int forage(int);
         int stdCycle(void);
@@ -38,6 +40,10 @@ class tribe
         int care(int);
         int setNumber(int);
         int getNumber(void) const;
+        int getHappy(void) const;
+        int setHappy(int);
+        int getAge(void) const;
+        int setAge(int);
 };
 
 #endif

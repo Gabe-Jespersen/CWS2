@@ -25,9 +25,11 @@ int main(int argc, char** argv)
     vector<tribe> tribes;
     tribes.resize(tribeNumber);
 
+    //tribe init
     for(unsigned i = 0; i < tribes.size(); i++)
     {
         tribes.at(i).setNumber(i);
+        tribes.at(i).setHappy(initPopulation);
         for(int j = 0; j < initPopulation; j++)
         {
             tribes.at(i).forceBirth();
@@ -93,16 +95,7 @@ int main(int argc, char** argv)
             if(tribes.at(i).getTech() >= 1000 || tribes.size() == 1)//current win condition
             {
                 clear();
-                /*
-                if(tribes.at(i).getNumber() < 10)
-                {
-                    printw("Tribe 0%d wins\n",tribes.at(i).getNumber());
-                }
-                else
-                {
-                    printw("Tribe %d wins\n",tribes.at(i).getNumber());
-                }
-                */
+                printw("Tribe %d wins\n",tribes.at(i).getNumber());
                 refresh();
                 getch();
                 endwin();
@@ -132,6 +125,16 @@ int main(int argc, char** argv)
         }
         */
 
+        /*
+        for(unsigned i = 0; i < tribes.size(); ++i)
+        {
+            if(rand() % int(1000 - (100 * log2(tribes.at(i).getTribesmen().size() + 2))) == 0)
+            {
+                tribes.push_back(tribes.at(i));
+            }
+        }
+        */
+
         //initiate multiAIDS
         //printw("mark 1\n");
         //refresh();
@@ -144,15 +147,51 @@ int main(int argc, char** argv)
             threads.at(i).join();
             threads.erase(threads.begin() + i);
             */
-            threads.push_back(thread([&tribes,i]{//printw("2test #%d\n", i);//really fuck i
-                                                tribes.at(i).aiCycle();
-                                                tribes.at(i).stdCycle();
-                                                /*
-                                                printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
-                                                tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),
-                                                tribes.at(i).getTech());
+            //tribes.push_back(tribes.at(i));
+            threads.push_back(thread([&tribes,i,&tribeNumber]{//printw("2test #%d\n", i);//really fuck i
+                                                 tribes.at(i).aiCycle();
+                                                 tribes.at(i).stdCycle();
+                                                 /*
+                                                 if(tribes.at(i).getHappy() < tribes.at(i).getTribesmen().size() || rand() % 20 == 0)
+                                                 {
+                                                 */
+                                                 /*
+                                                    int temp = tribeNumber;//for setting number
+                                                    int temp1 = tribes.size();//for position
+                                                    tribe tempTribe;
+                                                    tribeNumber++;
+                                                    if(rand() % 1000)
+                                                    {
+                                                        //tribes.push_back(tribes.at(i));
+                                                    }
+                                                    */
+                                                    /*
+                                                    tribes.push_back(tempTribe);
+                                                    */
+                                                    /*
+                                                    tribes.at(temp1).setNumber(temp);
+                                                    tribes.at(temp1).setAge(0);
+                                                    */
+                                                    /*
+                                                    for(unsigned j = 0; j < tribes.at(j).getTribesmen().size(); ++j)
+                                                    {
+                                                        if(rand() % 2 == 0)
+                                                        {
+                                                            tribes.at(temp1).getTribesmen().push_back(tribes.at(i).getTribesmen().at(j));
+                                                            tribes.at(i).kill(j);
+                                                        }
+                                                    }
+                                                    */
+                                                    /*
+                                                }
                                                 */
-                                                }));
+                                                        
+                                                 /*
+                                                 printw("Tribe %d: %d,%d,%d\n",tribes.at(i).getNumber(),
+                                                 tribes.at(i).getTribesmen().size(),tribes.at(i).getFood(),
+                                                 tribes.at(i).getTech());
+                                                 */
+                                                 }));
             //threads.push_back(thread([]{printw("test\n");}));
         }
         //printw("mark 2\n");
@@ -172,7 +211,33 @@ int main(int argc, char** argv)
         //printw("mark 4\n");
         //refresh();
         //getch();
-        printw("cycle %d\n",cycle);
+        printw("cycle: %d\n",cycle);
+        printw("tribes: %d\n",tribes.size());
+
+        int totalPopulation = 0;
+        for(unsigned i = 0; i < tribes.size(); ++i)
+        {
+            totalPopulation += tribes.at(i).getTribesmen().size();
+        }
+        printw("population: %d\n",totalPopulation);
+
+        double highestTech = 0;
+        for(unsigned i = 0; i < tribes.size(); ++i)
+        {
+            if(highestTech < tribes.at(i).getTech())
+            {
+                highestTech = tribes.at(i).getTech();
+            }
+        }
+        printw("highest tech: %f\n",highestTech);
+
+        double averageHappy = 0;
+        for(unsigned i = 0; i < tribes.size(); ++i)
+        {
+            averageHappy += tribes.at(i).getHappy();
+        }
+        averageHappy /= tribes.size();
+        printw("average happiness: %f\n",averageHappy);
 
         refresh();
     }

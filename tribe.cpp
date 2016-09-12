@@ -100,7 +100,7 @@ int tribe::males() const
     return temp;
 }
 
-int tribe::getTech() const
+double tribe::getTech() const
 {
     return technology;
 }
@@ -119,6 +119,9 @@ int tribe::forage(int foragers)
 
 int tribe::stdCycle()
 {
+    int toHappy = 0;//default
+    int oldArt = art;
+
     //eating
     double toEat = 0;
     for(unsigned i = 0; i < tribesmen.size(); ++i)//unsigned to end warn
@@ -148,6 +151,7 @@ int tribe::stdCycle()
             killRandom();
         }
         storedFood++;
+        toHappy--;
     }
 
     //aging
@@ -170,6 +174,7 @@ int tribe::stdCycle()
                                                 //math is hard
                 {
                     birth();
+                    toHappy++;
                 }
             }
             break;
@@ -183,20 +188,29 @@ int tribe::stdCycle()
         if(rand()%((health/10000)+15+(3*int(log(technology/10))))==0)
         {
             killRandom();
+            toHappy--;
         }
     }
+
+    //make older
+    age++;
+    
+    //happiness stuff
+    toHappy += 100 - log(age);
+    toHappy += log(art - oldArt + 1);
+    setHappy(toHappy);
 
     return 1;
 }
 
 int tribe::killRandom()
 {
-    if(tribesmen.size() == 0)
+    if(tribesmen.size() <= 0)//just in case
     {
         return 1;
     }
     int toKill = rand() % tribesmen.size();
-    tribesmen.erase(tribesmen.begin() + toKill);
+    kill(toKill);
     return 1;
 }
 
@@ -282,6 +296,7 @@ int tribe::aiCycle()
 int tribe::create(int people)
 {
     art += people/10;
+    happiness += people;
     return 1;
 }
 int tribe::research(int researchers)
@@ -290,7 +305,8 @@ int tribe::research(int researchers)
     {
         if(rand() % 10 == 0)
         {
-            technology += researchers;
+            technology += (gaussian(100,20)/1000);
+            happiness++;
         }
     }
     return 1;
@@ -298,6 +314,7 @@ int tribe::research(int researchers)
 int tribe::care(int toCare)
 {
     health += toCare;
+    happiness++;
     return 1;
 }
 int tribe::setNumber(int toSet)
@@ -308,4 +325,22 @@ int tribe::setNumber(int toSet)
 int tribe::getNumber() const
 {
     return number;
+}
+int tribe::getHappy() const
+{
+    return happiness;
+}
+int tribe::setHappy(int toSet)
+{
+    happiness = toSet;
+    return 1;
+}
+int tribe::getAge() const
+{
+    return age;
+}
+int tribe::setAge(int toSet)
+{
+    age = toSet;
+    return 1;
 }
